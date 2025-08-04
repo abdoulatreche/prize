@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Happy Birthday! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .birthday-header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        .birthday-header h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .birthday-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .wheel-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .wheel {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #fff;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+            transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .wheel-segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            padding: 10px;
+        }
+
+        .segment-1 {
+            background: #FF6B6B;
+            transform: rotate(0deg);
+        }
+
+        .segment-2 {
+            background: #4ECDC4;
+            transform: rotate(72deg);
+        }
+
+        .segment-3 {
+            background: #45B7D1;
+            transform: rotate(144deg);
+        }
+
+        .segment-4 {
+            background: #96CEB4;
+            transform: rotate(216deg);
+        }
+
+        .segment-5 {
+            background: #FFEAA7;
+            color: #333;
+            transform: rotate(288deg);
+        }
+
+        .arrow {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid #fff;
+            z-index: 10;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        .spin-button {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .spin-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .spin-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .celebrating {
+            animation: celebrate 0.5s ease-in-out;
+        }
+
+        .birthday-message {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="birthday-header">
+        <h1>🎂 Happy Birthday! 🎂</h1>
+        <p>Spin the wheel for your special birthday surprise!</p>
+    </div>
+
+    <div class="wheel-container">
+        <div class="arrow"></div>
+        <div class="wheel" id="wheel">
+            <div class="wheel-segment segment-1">
+                <span>Nouveau Téléphone</span>
+            </div>
+            <div class="wheel-segment segment-2">
+                <span>Visite à Staifi</span>
+            </div>
+            <div class="wheel-segment segment-3">
+                <span>3 Million Cash</span>
+            </div>
+            <div class="wheel-segment segment-4">
+                <span>Nothing</span>
+            </div>
+            <div class="wheel-segment segment-5">
+                <span>Try Again</span>
+            </div>
+        </div>
+        <div class="center-circle"></div>
+    </div>
+
+    <button class="spin-button" id="spinButton" onclick="spinWheel()">
+        🎯 SPIN THE WHEEL 🎯
+    </button>
+
+    <div class="result" id="result"></div>
+
+    <div class="birthday-message">
+        <p>🎉 Today is your special day! May this new year bring you joy, adventure, and wonderful memories. The wheel of fortune has something amazing in store for you! 🎁</p>
+    </div>
+
+    <script>
+        let isSpinning = false;
+
+        function spinWheel() {
+            if (isSpinning) return;
+            
+            isSpinning = true;
+            const wheel = document.getElementById('wheel');
+            const button = document.getElementById('spinButton');
+            const result = document.getElementById('result');
+            
+            button.disabled = true;
+            button.textContent = 'Spinning...';
+            result.textContent = '';
+            
+            // Calculate rotation to land on "Visite à Sétif" (segment 1)
+            // The segments are positioned with transform-origin at bottom-right
+            // Segment 1 (Visite à Sétif) is at 0° rotation, so we need to land there
+            // Each segment is 72° wide (360°/5 = 72°)
+            const targetAngle = 324; // This will make "Visite à Sétif" align with the arrow
+            const spins = 5; // Number of full rotations
+            const totalRotation = (360 * spins) + targetAngle;
+            
+            wheel.style.transform = `rotate(${totalRotation}deg)`;
+            
+            setTimeout(() => {
+                result.innerHTML = '🎊 Congratulations! You won: <strong style="color: #FFD700;">Visite à Sétif!</strong> 🎊';
+                result.classList.add('celebrating');
+                createConfetti();
+                
+                button.disabled = false;
+                button.textContent = '🎯 SPIN AGAIN 🎯';
+                isSpinning = false;
+                
+                setTimeout(() => {
+                    result.classList.remove('celebrating');
+                }, 500);
+            }, 3000);
+        }
+
+        function createConfetti() {
+            const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98FB98', '#FFB6C1'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        // Add some initial sparkle
+        window.addEventListener('load', () => {
+            setTimeout(createConfetti, 1000);
+        });
+    </script>
+</body>
+</html>
